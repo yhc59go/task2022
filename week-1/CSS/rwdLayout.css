@@ -1,0 +1,149 @@
+.baseSettings 
+{
+    font-size: 20px; 
+}
+
+.topFrame{
+    background-color: #ffeaed;
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+    justify-content: space-between; 
+}
+
+.topLeft{
+    flex:auto;
+    align-items: center;
+    justify-content:flex-start;
+    background-color:#ffeaed;
+}
+
+.menuItem{
+    flex:none;
+    padding-left: 20px;
+    text-align: center;
+}
+
+.desktopMenu{
+    display:block;
+    flex:auto;
+    justify-content:flex-end;
+    display: flex;
+    background-color:#ffeaed;
+}
+
+.mobileMenu{ 
+    display:none; 
+    
+    background-color:#ffeaed;
+}
+
+.greetingArea 
+{
+    display: flex;
+    justify-content: center;/*水平置中*/
+    align-items: center; /*垂直置中*/
+    height: 300px;
+    margin-bottom: 2%;
+    background-color: #87CEEB;
+}
+
+.greetingText{
+    font-size: 40px; 
+    text-align:center;
+}
+
+.centerArea{
+    margin-left: auto; /*為置中效果*/
+    margin-right: auto; /*為置中效果*/
+    width: 1200px;
+    display: flex;
+    justify-content: space-between;  
+}
+
+.promotion1{
+    height: 50px;
+    flex:auto;
+    display: flex;
+    vertical-align: middle;
+    align-items: center; /*垂直置中*/
+    margin-right: 6px;
+    background-color: #bffff5;  
+}
+
+.promotion2{
+    height: 50px;
+    flex:auto;
+    display: flex;
+    vertical-align: middle;
+    align-items: center; /*垂直置中*/
+    margin-left: 6px;
+    background-color: #bffff5;
+}
+
+.promotionPicture{
+    width: 80px;
+    height: 50px; 
+}
+
+.promotionText{
+    padding-left: 10px;  
+}
+
+.product{     
+    width:291px;  
+    margin-top: 1%;
+    
+    background-color: #bffff5; 
+}
+
+.productImages{
+    width: 100%;    
+    vertical-align:bottom;/*用來處理img和div有距離的問題*/
+}
+
+.productTitle{
+    text-align: center;
+    /*margin-top: -2%;*/  
+}
+
+@media (max-width:1200px){
+    .centerArea{
+        flex-wrap: wrap;
+        width: 90%;
+    }
+
+    .product{
+        width: 45%;
+    }
+
+    .promotion1, .promotion2{
+        width: 45%;
+        flex:none;
+    } 
+
+}
+
+@media (max-width:600px){
+    .desktopMenu{
+        display:none;
+    }
+    
+    .mobileMenu{
+        display:block;
+    }
+    
+    .product{
+        width: 90%;
+        flex:auto;
+        margin-top: 2%;
+    }
+    
+    .promotion1, .promotion2{
+        width: 90%;
+        flex:auto;
+        margin-left:0;
+        margin-right:0;
+        margin-top: 2%;
+    } 
+}
