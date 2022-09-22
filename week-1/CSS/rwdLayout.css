@@ -6,6 +6,7 @@
 
 .topFrame{
     background-color: #ffeaed;
+    padding: 10px;
     display: flex;
     align-items: center;
     vertical-align: middle;
