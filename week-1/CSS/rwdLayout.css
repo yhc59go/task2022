@@ -25,6 +25,11 @@
     text-align: center;
 }
 
+.menuItem:hover {
+    color: peru;
+    background-color: #FFFCEB;
+    cursor: pointer;
+}
 
 .desktopMenu{
     display:block;
