@@ -20,8 +20,8 @@
 }
 
 .menuItem{
-    flex:none;   
-    padding-left: 20px;
+    flex:none;
+    margin-left: 20px;   
     text-align: center;
 }
 
