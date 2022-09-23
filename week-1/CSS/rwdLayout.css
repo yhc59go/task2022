@@ -128,18 +128,26 @@
 .product{     
     width:291px;  
     margin-top: 1%;
-    
-    background-color: #bffff5; 
+    height: 194px;
+    background: url(../images/food.jpg);
+    background-size: 291px 194px;
+    align-items: center;
 }
 
 .productImages{
     width: 100%;    
-    vertical-align:bottom;/*用來處理img和div有距離的問題*/
+    height: 80%;
 }
 
 .productTitle{
     text-align: center;
-    /*margin-top: -2%;*/  
+    height: 20%;
+    background:rgba(208, 204, 204, 0.6);
+    position:relative;
+    z-index:1;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
 }
 
 @media (max-width:1200px){
@@ -150,6 +158,8 @@
 
     .product{
         width: 45%;
+		background: url(../images/food.jpg);
+        background-size: cover;
     }
 
     .promotion1, .promotion2{
@@ -170,8 +180,11 @@
     
     .product{
         width: 90%;
+		height:300px;
         flex:auto;
         margin-top: 2%;
+		background: url(../images/food.jpg);
+        background-size: cover;
     }
     
     .promotion1, .promotion2{
