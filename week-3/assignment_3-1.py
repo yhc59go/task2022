@@ -7,8 +7,7 @@ src="https://padax.github.io/taipei-day-trip-resources/taipei-attractions-assign
 with request.urlopen(src)as response:
     data=json.load(response)
     
-csvPath="C:\\Users\\YHC\\Documents\\Study\\WeHelp Bootcamp\\week1_0919\\github\\task2022\\week-3\\"
-with open(csvPath+'data.csv','w', newline='', encoding="utf-8") as csvFile:
+with open("data.csv","w", newline="", encoding="utf-8") as csvFile:
     writer=csv.writer(csvFile)
     
     for idx in range(0,len(data["result"]["results"])):
