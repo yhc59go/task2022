@@ -8,11 +8,12 @@
     </head>
     <body class="baseSettings">
         <script>
+            let dataNumber=-1;
             let src="https://padax.github.io/taipei-day-trip-resources/taipei-attractions-assignment.json"
             fetch(src).then(function(response){
                 return response.json();
             }).then(function(data){
-                
+
                 for(let i=0;i<data["result"]["results"].length;i++){
                     if(i>9){
                         break;
@@ -26,9 +27,9 @@
                     
                     //get image to webpage
                     let imageFiles=data["result"]["results"][i]["file"];
-                    const regex = /https:\/\/(.*?).jpg/;
+                    const regex = /https:\/\/(.*?).jpg/i;
                     imageFile=imageFiles.match(regex);
-                    console.log(imageFile);
+                    //console.log(imageFile);
                     
                     var obj = document.getElementById("image"+i);
                     obj.setAttribute("src", imageFile[0]);
@@ -36,11 +37,54 @@
                     //obj.style.backgroundSize = "291px 194px";
                     //obj.style.backgroundSize = "cover";
                     obj.style.backgroundRepeat = "no-repeat";
-                    
+                    dataNumber=dataNumber+1;
                 }
             });
             function getData(){
+                fetch(src).then(function(response){
+                    return response.json();
+                }).then(function(data){
+                    for(let i=0;i<2;i++)
+                    {
+                        let targetTag=document.getElementsByTagName('body'); 
+                        let loadButton=document.querySelector('#loadButton');
+                        let centerAreaTemplate=document.createElement('div');
+                        centerAreaTemplate.className = "centerArea";                 
+                        for(let j=0;j<4;j++)
+                        {
+                            let productImagesTemplate=document.createElement('div');
+                            productImagesTemplate.className = "productImages";
 
+                            let productTitleTemplate=document.createElement('div');
+                            productTitleTemplate.className = "productTitle";
+                            //get title to webpage
+                            let title=document.createElement('span');
+                            title.textContent=data["result"]["results"][dataNumber+1]["stitle"];
+                            productTitleTemplate.appendChild(title);
+
+                            let productTemplate=document.createElement('div');
+                            productTemplate.className = "product";
+                            
+                            productTemplate.appendChild(productImagesTemplate);
+                            productTemplate.appendChild(productTitleTemplate);
+                            //get image to webpage
+                            let imageFiles=data["result"]["results"][dataNumber+1]["file"];
+                            const regex = /https:\/\/(.*?).jpg/i;
+                            imageFile=imageFiles.match(regex);
+                            console.log(imageFile);
+
+                            productTemplate.setAttribute("src", imageFile[0]);
+                            productTemplate.style.backgroundImage = "url('" + imageFile[0] + "')";
+                            productTemplate.style.backgroundRepeat = "no-repeat";
+
+                            centerAreaTemplate.appendChild(productTemplate);
+                            
+                            targetTag[0].insertBefore(centerAreaTemplate,loadButton);
+                            dataNumber=dataNumber+1;
+                        }
+                    }
+                });
+                
             }
         </script>
         
@@ -116,9 +160,7 @@
                 <div id="Product_9" class="productTitle">Product 8</div>
             </div>
         </div>
-        <div id="moreData">
-
-        </div>
-        <div class="loadButton" ><button onclick="getData();" class="loadButton2" type="button">Load More</button></div>
+        
+        <div id="loadButton" class="loadButton" ><button onclick="getData();" class="loadButton2" type="button">Load More</button></div>
     </body>
 </html>
