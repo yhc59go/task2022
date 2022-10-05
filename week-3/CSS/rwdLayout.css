@@ -1,0 +1,227 @@
+.baseSettings 
+{
+    font-size: 20px; 
+    margin: 0px;
+    
+    color: black;
+}
+
+.topFrame{
+    background-color: #ffeaed;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+    justify-content: space-between; 
+}
+
+.topLeft{
+    flex:auto;
+    align-items: center;
+    justify-content:flex-start;
+    background-color:#ffeaed;
+}
+
+.menuItem{
+    flex:none;
+    margin-left: 20px;   
+    text-align: center;
+}
+
+.menuItem:hover {
+    color: peru;
+    background-color: #FFFCEB;
+    cursor: pointer;
+}
+
+.desktopMenu{
+    display:block;
+    flex:auto;
+    justify-content:flex-end;
+    display: flex;
+    background-color:#ffeaed;
+}
+
+.mobileMenu{ 
+    display:none; 
+    cursor: pointer;
+    background-color:#ffeaed;
+    position: relative;
+}
+
+.mobileMenu:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+    right:0;
+	background-color: #ffeaed;
+    min-width: 160px;
+	text-align:center;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);	
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #FFFCEB;
+    color: peru;
+}
+
+.greetingArea 
+{
+    display: flex;
+    justify-content: center;/*水平置中*/
+    align-items: center; /*垂直置中*/
+    height: 300px;
+    margin-bottom: 2%;
+    background-color: #87CEEB;
+}
+
+.greetingText{
+    font-size: 40px; 
+    text-align:center;
+}
+
+.centerArea{
+    margin-left: auto; /*為置中效果*/
+    margin-right: auto; /*為置中效果*/
+    width: 1200px;
+    display: flex;
+    justify-content: space-between;  
+}
+
+.promotion1{
+    height: 50px;
+    display: flex;
+    flex:1;
+    vertical-align: middle;
+    align-items: center; /*垂直置中*/
+    margin-right: 6px;
+    background-color: #bffff5;  
+}
+
+.promotion2{
+    height: 50px;
+    display: flex;
+    flex:1;
+    vertical-align: middle;
+    align-items: center; /*垂直置中*/
+    margin-left: 6px;
+    background-color: #bffff5;
+}
+
+.promotionPicture{
+    width: 80px;
+    height: 50px; 
+}
+
+.promotionText{
+    padding-left: 10px;  
+}
+
+.product{     
+    width:291px;  
+    margin-top: 1%;
+    height: 194px;
+    background: url(../images/food.jpg);
+    background-size: 291px 194px;
+    align-items: center;
+}
+
+.productImages{
+    width: 100%;    
+    height: 75%;
+}
+
+.productImages::after{
+    content: url("");
+    display: flex;
+    height:50px;
+    background-position: right top;
+    background-image:url(../icons/star.svg);
+    background-size:50px 50px;
+    background-repeat: no-repeat; 
+}
+
+.productTitle{
+    text-align: center;
+    height: 25%;
+    background:rgba(208, 204, 204, 0.8);
+    position:relative;
+    z-index:1;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+.loadButton{
+    display: flex;
+    
+    margin-bottom: 5%;
+    margin-top: 5%; 
+    margin-left: auto;
+    margin-right: auto;
+   
+    
+    text-align: center;
+    vertical-align:middle;
+}
+.loadButton2{
+    margin-left: auto;
+    margin-right: auto;
+    width:10%;
+    height:50px;
+    
+}
+@media (max-width:1200px){
+    .centerArea{
+        flex-wrap: wrap;
+        width: 90%;
+    }
+
+    .product{
+        width: 45%;
+		background: url(../images/food.jpg);
+        background-size: cover;
+    }
+
+    .promotion1, .promotion2{
+        width: 45%;
+        flex:none;
+    } 
+
+}
+
+@media (max-width:600px){
+    .desktopMenu{
+        display:none;
+    }
+    
+    .mobileMenu{
+        display:block;
+    }
+    
+    .product{
+        width: 90%;
+		height:300px;
+        flex:auto;
+        margin-top: 2%;
+		background: url(../images/food.jpg);
+        background-size: cover;
+    }
+    
+    .promotion1, .promotion2{
+        width: 90%;
+        flex:auto;
+        margin-left:0;
+        margin-right:0;
+        margin-top: 2%;
+    } 
+}

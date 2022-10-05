@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8" />
+        <title>Assignment - Week 1</title>
+        <link rel="stylesheet" type="text/css" href="CSS/rwdLayout.css" />
+    </head>
+    <body class="baseSettings">
+        <script>
+            let src="https://padax.github.io/taipei-day-trip-resources/taipei-attractions-assignment.json"
+            fetch(src).then(function(response){
+                return response.json();
+            }).then(function(data){
+                
+                for(let i=0;i<data["result"]["results"].length;i++){
+                    if(i>9){
+                        break;
+                    }
+                    //get title to webpage
+                    let targetTag=document.querySelector('#Product_'+i);
+                    targetTag.textContent="";
+                    let title=document.createElement('span');
+                    title.textContent=data["result"]["results"][i]["stitle"];
+                    targetTag.appendChild(title);
+                    
+                    //get image to webpage
+                    let imageFiles=data["result"]["results"][i]["file"];
+                    const regex = /https:\/\/(.*?).jpg/;
+                    imageFile=imageFiles.match(regex);
+                    console.log(imageFile);
+                    
+                    var obj = document.getElementById("image"+i);
+                    obj.setAttribute("src", imageFile[0]);
+                    obj.style.backgroundImage = "url('" + imageFile[0] + "')";
+                    //obj.style.backgroundSize = "291px 194px";
+                    //obj.style.backgroundSize = "cover";
+                    obj.style.backgroundRepeat = "no-repeat";
+                    
+                }
+            });
+            function getData(){
+
+            }
+        </script>
+        
+        <div class="topFrame">
+            <div class="topLeft">My Website </div>
+            <div class="desktopMenu" >
+                <div class="menuItem">Item1</div>
+                <div class="menuItem">Item2</div>
+                <div class="menuItem">Item3</div>
+                <div class="menuItem">Item4</div>
+            </div>
+            <div class="mobileMenu">
+                <img src="icons/reorder_48dp.svg" />
+                <div class="dropdown-content">	
+                    <a href="#">Item1</a>							
+                    <a href="#">Item2</a>							
+                    <a href="#">Item3</a>							
+                    <a href="#">Item4</a>						
+                </div>            
+            </div>
+        </div>
+
+        <div class="greetingArea">
+            <div class="greetingText">Welcome to MyHome</div>
+        </div>
+
+        <div class="centerArea">
+            <div class="promotion1">
+                <img id="image0" src="images/food.jpg"  class="promotionPicture"/>
+                <div id="Product_0" class="promotionText"></div>
+            </div>
+            <div class="promotion2">
+                <img id="image1" src="images/food.jpg"  class="promotionPicture"/>
+                <div id="Product_1" class="promotionText"> promotion 2</div>
+            </div>
+        </div>
+        
+        <div class="centerArea">
+             <div id="image2" class="product"> 
+                <div  class="productImages"></div>   
+                <div id="Product_2" class="productTitle">Product 1</div>
+            </div>
+
+            <div  id="image3" class="product"> 
+                <div  class="productImages"></div>   
+                <div id="Product_3" class="productTitle">Product 2</div>
+            </div>
+            <div id="image4" class="product"> 
+                <div class="productImages"></div>   
+                <div id="Product_4" class="productTitle">Product 3</div>
+            </div>
+            <div id="image5" class="product"> 
+                <div class="productImages"></div>   
+                <div id="Product_5" class="productTitle">Product 4</div>
+            </div>
+        </div>
+        <div class="centerArea">
+            <div id="image6" class="product"> 
+                <div class="productImages"></div>   
+                <div id="Product_6" class="productTitle">Product 5</div>
+            </div>
+
+            <div id="image7" class="product"> 
+                <div class="productImages"></div>   
+                <div id="Product_7" class="productTitle">Product 6</div>
+            </div>
+            <div id="image8" class="product"> 
+                <div class="productImages"></div>   
+                <div id="Product_8" class="productTitle">Product 7</div>
+            </div>
+            <div id="image9" class="product"> 
+                <div class="productImages"></div>   
+                <div id="Product_9" class="productTitle">Product 8</div>
+            </div>
+        </div>
+        <div id="moreData">
+
+        </div>
+        <div class="loadButton" ><button onclick="getData();" class="loadButton2" type="button">Load More</button></div>
+    </body>
+</html>
