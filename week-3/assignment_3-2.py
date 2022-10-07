@@ -81,7 +81,7 @@ with open('movie.txt', 'w',encoding="utf-8") as f:
         f.write(title+"\n")
     for title in negativeCommon:
         f.write(title+"\n")
-print("Done. Got titles about [好雷], [普雷], [壞雷] to movie.txt successfully.")
+print("Done. Got titles about [好雷], [普雷], [負雷] to movie.txt successfully.")
 print("Consume time: "+str(time.time()-timeBefore))
 
 
