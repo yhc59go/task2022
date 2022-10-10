@@ -43,8 +43,8 @@ def member():
     else:
         return redirect("/")
 
-@app.route("/logout")
-def logout():
+@app.route("/signout")
+def signout():
     session.pop("username", None)
     return redirect("/")
 
