@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8" />
+        <title>Assignment - Week 1</title>
+        <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='CSS/rwdLayout.css')}}" />
+    </head>
+    <body class="baseSettings">
+        <div class="topFrame">
+            <div class="topLeft">My Website </div>
+            <div class="desktopMenu" >
+                <div class="menuItem">Item1</div>
+                <div class="menuItem">Item2</div>
+                <div class="menuItem">Item3</div>
+                <div class="menuItem">Item4</div>
+            </div>
+            <div class="mobileMenu">
+                <img src="{{url_for('static',filename='icons/reorder_48dp.svg')}}" />
+                <div class="dropdown-content">	
+                    <a href="#">Item1</a>							
+                    <a href="#">Item2</a>							
+                    <a href="#">Item3</a>							
+                    <a href="#">Item4</a>						
+                </div>            
+            </div>
+        </div>
+
+        <div class="greetingArea">
+            <div class="greetingText">歡迎光臨，這是會員頁</div>
+        </div>
+
+        <div class="centerArea">
+            <div class="loginTitle"> 恭喜您，成功登入系統</div>
+            <a href="/logout" class="loginTitle"> 登出系統</a> 
+        </div>
+        
+    </body>
+</html>

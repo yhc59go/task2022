@@ -1,0 +1,126 @@
+.baseSettings 
+{
+    font-size: 20px; 
+    margin: 0px;
+    font-weight:bold;
+    color: black;
+}
+
+.topFrame{
+    background-color: #ffeaed;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+    justify-content: space-between; 
+}
+
+.topLeft{
+    flex:auto;
+    align-items: center;
+    justify-content:flex-start;
+    background-color:#ffeaed;
+}
+
+.menuItem{
+    flex:none;
+    margin-left: 20px;   
+    text-align: center;
+}
+
+.menuItem:hover {
+    color: peru;
+    background-color: #FFFCEB;
+    cursor: pointer;
+}
+
+.desktopMenu{
+    display:block;
+    flex:auto;
+    justify-content:flex-end;
+    display: flex;
+    background-color:#ffeaed;
+}
+
+.mobileMenu{ 
+    display:none; 
+    cursor: pointer;
+    background-color:#ffeaed;
+    position: relative;
+}
+
+.mobileMenu:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+    right:0;
+	background-color: #ffeaed;
+    min-width: 160px;
+	text-align:center;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);	
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #FFFCEB;
+    color: peru;
+}
+
+.greetingArea 
+{
+    display: flex;
+    justify-content: center;/*水平置中*/
+    align-items: center; /*垂直置中*/
+    height: 150px;
+    margin-bottom: 2%;
+    background-color: #1B294B;
+}
+
+.greetingText{
+    font-size: 40px; 
+    text-align:center;
+    color: white;
+}
+
+.centerArea{
+    margin-left: auto; /*為置中效果*/
+    margin-right: auto; /*為置中效果*/
+    width: 1200px;
+    align-items: center;
+    text-align: center;
+   
+}
+
+.loginTitle{     
+    padding: 2%;     
+}
+
+.formArea{
+    margin: 6px;
+}
+@media (max-width:1200px){
+    .centerArea{
+        flex-wrap: wrap;
+        width: 90%;
+    }
+}
+
+@media (max-width:600px){
+    .desktopMenu{
+        display:none;
+    }
+    
+    .mobileMenu{
+        display:block;
+    }
+   
+}
