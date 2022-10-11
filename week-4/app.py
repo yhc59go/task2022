@@ -38,7 +38,7 @@ def errorHandler():
 
 @app.route("/member")
 def member():  
-    if 'username' in session:
+    if 'username' in session and session["username"]=="test" and session["password"]=="test":
         return render_template("loginSuccess.html")
     else:
         return redirect("/")
