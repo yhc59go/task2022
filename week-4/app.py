@@ -18,8 +18,6 @@ def index():
 def checkSignin():
     username=request.form["username"]
     password=request.form["password"]
-    session["username"]=request.form["username"]
-    session["password"]=request.form["password"]
     print(username)
     print(password)
     if (not username) or (not password):
@@ -29,6 +27,8 @@ def checkSignin():
         message="帳號、或密碼輸入錯誤"
         return redirect("/error?message="+message)
     elif username=="test" and password=="test":
+        session["username"]=request.form["username"]
+        session["password"]=request.form["password"]
         return redirect("/member")
     
 @app.route("/error")
@@ -38,7 +38,7 @@ def errorHandler():
 
 @app.route("/member")
 def member():  
-    if 'username' in session and session["username"]=="test" and session["password"]=="test":
+    if 'username' in session:
         return render_template("loginSuccess.html")
     else:
         return redirect("/")
