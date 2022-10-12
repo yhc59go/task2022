@@ -43,10 +43,16 @@
             <div class="loginTitle"> 計算正整數的平方
                 
             </div>
-            <form action="/calculatorSubmit" class="formArea">
-                正整數 <input class="formArea" type="text" name="positiveNumber"/><br>
+            <form name="squareCalculator" class="formArea" onsubmit="return squareCalculatorValidate()">
+                正整數 <input class="formArea" type="text" id="positiveNumber" required="required" /><br>
                 <button  >計算</button>
             </form>  
-        </div>       
+        </div>  
+        <script type="text/javascript">
+            function squareCalculatorValidate(){
+                window.location.replace("/square/"+document.getElementById('positiveNumber').value);
+                window.event.returnValue=false;   
+            }
+        </script>
     </body>
 </html>

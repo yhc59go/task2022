@@ -48,15 +48,14 @@ def signout():
     session.pop("username", None)
     return redirect("/")
 
-@app.route('/calculatorSubmit')
-def calculatorSubmit():
-    number=request.args.get("positiveNumber")
-    return redirect("/square/"+number)
-
 #Flask Dynamic Routing
 @app.route("/square/<number>")
 def square(number):
-    result=int(number)*int(number)
+    try:
+        numberData=int(number)
+    except Exception:
+        numberData=0
+    result=numberData*numberData
     return render_template("square.html",squareShowInPage=result)
     
 app.secret_key="keySecret123456"
