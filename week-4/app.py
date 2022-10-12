@@ -18,8 +18,7 @@ def index():
 def checkSignin():
     username=request.form["username"]
     password=request.form["password"]
-    print(username)
-    print(password)
+    
     if (not username) or (not password):
         message="請輸入帳號、密碼"
         return redirect("/error?message="+message)
