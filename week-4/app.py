@@ -26,8 +26,8 @@ def checkSignin():
         message="帳號、或密碼輸入錯誤"
         return redirect("/error?message="+message)
     elif username=="test" and password=="test":
-        session["username"]=request.form["username"]
-        session["password"]=request.form["password"]
+        session["username"]=username
+        session["password"]=password
         return redirect("/member")
     
 @app.route("/error")
