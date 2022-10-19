@@ -137,4 +137,4 @@ SELECT member.id,member.name,member.username,message.content,message.like_count,
 ```
 SELECT avg(message.like_count) FROM message INNER JOIN member ON message.member_id=member.id where member.username="test";
 ```
-    ![Aggregate](Aggregate.PNG)
+   ![Aggregate](Aggregate.PNG)
