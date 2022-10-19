@@ -161,11 +161,11 @@ CREATE TABLE likeDetails (
 ```
    ![likeDetails](likeDetails.PNG)
 - 可以根據留言編號取得該留言有哪些會員按讚。
-```
-例子: 對第二條留言按讚的會員
-select member.name,member.username from likeDetails inner join member on likeDetails.member_id=member.id 
-where likeDetails.message_id=2;
-```
+    例子: 對第二條留言按讚的會員
+    ```
+    select member.name,member.username from likeDetails inner join member on likeDetails.member_id=member.id 
+    where likeDetails.message_id=2;
+    ```
    ![likeDetailsData](likeDetailsData.PNG)
 - 會員若是嘗試對留言按讚：要能先檢查是否曾經按過讚，然後才將按讚的數量 +1 並且記錄按讚的會員是誰。
     1.確認第2位會員對第2條留言按讚數是0:
