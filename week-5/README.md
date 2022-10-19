@@ -171,7 +171,7 @@ where likeDetails.message_id=2;
 ```
 1.確認第2位會員對第2條留言按讚數是0:
 select count(*) from likeDetails where member_id=2 and message_id=2;
-2.再允許第2位會員對第2條留言按讚，並加這個動作加入資料表中:
+2.再允許第2位會員對第2條留言按讚，並把這個按讚資訊加入資料表中:
 insert into likeDetails(message_id, member_id) values(2,2);
 ```
    ![likeDetailsRecord](likeDetailsRecord.PNG)
