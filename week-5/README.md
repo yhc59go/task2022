@@ -143,22 +143,22 @@ SELECT avg(message.like_count) FROM message INNER JOIN member ON message.member_
 ## (Optional) Requirement 6
 - 不只要記錄留言按讚的數量，還要紀錄每一個留言的按讚會員是誰，設計資料表likeDetails如下:
 
-| 欄位名稱  | 資料型態 | 額外設定 | ⽤途說明 |
-|  :---:  |  :---:  |  :---:  |  :---:  |
-| id | bigint | 主鍵、⾃動遞增 | 獨立編號 |
-| member_id | bigint | 不可為空值、外鍵對應 member 資料表中的 id | 按讚會員編號 |
-| message_id | bigint | 不可為空值、外鍵對應 message 資料表中的 id | 留言內容編號 |
-| time | datetime | 不可為空值、預設為當前時間 | 按讚時間 |
-```
-CREATE TABLE likeDetails (
-    id bigint PRIMARY KEY AUTO_INCREMENT,
-    message_id bigint NOT NULL,
-    member_id bigint NOT NULL,
-    time datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY(message_id) REFERENCES message(id),
-    FOREIGN KEY(member_id) REFERENCES member(id)
-);
-```
+    | 欄位名稱  | 資料型態 | 額外設定 | ⽤途說明 |
+    |  :---:  |  :---:  |  :---:  |  :---:  |
+    | id | bigint | 主鍵、⾃動遞增 | 獨立編號 |
+    | member_id | bigint | 不可為空值、外鍵對應 member 資料表中的 id | 按讚會員編號 |
+    | message_id | bigint | 不可為空值、外鍵對應 message 資料表中的 id | 留言內容編號 |
+    | time | datetime | 不可為空值、預設為當前時間 | 按讚時間 |
+    ```
+    CREATE TABLE likeDetails (
+        id bigint PRIMARY KEY AUTO_INCREMENT,
+        message_id bigint NOT NULL,
+        member_id bigint NOT NULL,
+        time datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY(message_id) REFERENCES message(id),
+        FOREIGN KEY(member_id) REFERENCES member(id)
+    );
+    ```
    ![likeDetails](likeDetails.PNG)
 - 可以根據留言編號取得該留言有哪些會員按讚。
     例子: 對第二條留言按讚的會員
