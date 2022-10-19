@@ -168,11 +168,13 @@ where likeDetails.message_id=2;
 ```
    ![likeDetailsData](likeDetailsData.PNG)
 - 會員若是嘗試對留言按讚：要能先檢查是否曾經按過讚，然後才將按讚的數量 +1 並且記錄按讚的會員是誰。
-```
-1.確認第2位會員對第2條留言按讚數是0:
-select count(*) from likeDetails where member_id=2 and message_id=2;
-2.再允許第2位會員對第2條留言按讚，並把這個按讚資訊加入資料表中:
-insert into likeDetails(message_id, member_id) values(2,2);
-```
-   ![likeDetailsRecord](likeDetailsRecord.PNG)
+    1.確認第2位會員對第2條留言按讚數是0:
+    ```
+    select count(*) from likeDetails where member_id=2 and message_id=2;
+    ```
+    ![likeDetailsRecord](likeDetailsRecord.PNG)
+    2.再允許第2位會員對第2條留言按讚，並把這個按讚資訊加入資料表中:
+    ```
+    insert into likeDetails(message_id, member_id) values(2,2);
+    ```
    ![likeDetailsRecord2](likeDetailsRecord2.PNG)
