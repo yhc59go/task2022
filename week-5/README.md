@@ -141,7 +141,7 @@ SELECT avg(message.like_count) FROM message INNER JOIN member ON message.member_
    ![Aggregate](Aggregate.PNG)
 
 ## (Optional) Requirement 6
-- 不只要記錄留言按讚的數量，還要紀錄每一個留言的按讚會員是誰
+- 不只要記錄留言按讚的數量，還要紀錄每一個留言的按讚會員是誰，設計資料表likeDetails如下:
 
 | 欄位名稱  | 資料型態 | 額外設定 | ⽤途說明 |
 |  :---:  |  :---:  |  :---:  |  :---:  |
