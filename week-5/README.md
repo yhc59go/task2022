@@ -6,7 +6,7 @@
 - [要求四](#requirement-4)
 - [要求五](#requirement-5)
 
-## 要求二
+## Requirement 2
 - 建立⼀個新的資料庫，取名字為 website。
 ```
 show databases;
@@ -28,7 +28,7 @@ CREATE TABLE member (
 );
 ```
 
-## 要求三
+## Requirement 3
 
 - 使⽤ INSERT 指令新增⼀筆資料到 member 資料表中，這筆資料的 username 和 password 欄位必須是 test。接著繼續新增⾄少 4 筆隨意的資料。
 ```
@@ -78,7 +78,7 @@ UPDATE member SET name="test2" WHERE username="test";
 ```
   ![Update](Update.PNG)
 
-## 要求四
+## Requirement 4
 - 取得 member 資料表中，總共有幾筆資料 (幾位會員)。
 ```
 SELECT COUNT(id) FROM member;
@@ -97,7 +97,7 @@ SELECT avg(follower_count) FROM member;
 ```
   ![avg](avg.PNG)
 
-## 要求五
+## Requirement 5
 - 在資料庫中，建立新資料表紀錄留⾔資訊，取名字為 message 。
 ```
 CREATE TABLE message (
