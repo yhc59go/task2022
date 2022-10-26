@@ -108,6 +108,13 @@
 .formArea{
     margin: 5px;
 }
+.messageBoardUserName{
+    font-weight:bold;
+
+}
+.messageBoardContent{
+    font-weight:lighter;
+}
 @media (max-width:1200px){
     .centerArea{
         flex-wrap: wrap;

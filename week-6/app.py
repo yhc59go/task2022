@@ -86,30 +86,16 @@ def checkSignin():
 def member():  
     sql ="SELECT member.fullName,message.content FROM message INNER JOIN member ON message.member_id=member.id"
     mycursor.execute(sql)
-    myresult = mycursor.fetchall()
-    # print(myresult)
-    # print(len(myresult))
-    # data_str = json.dumps(myresult,ensure_ascii=False)
-    # message={}
-    # messageResult=[]
-    # for idx in range(0,len(myresult)):
-    #     messageTemp={}
-    #     print(myresult[idx][0])
-    #     print(myresult[idx][1])
-    #     messageTemp["fullName"]=myresult[idx][0]
-    #     messageTemp["content"]=myresult[idx][1]
-    #     messageResult.append(messageTemp)
-    # message["Result"]= messageResult
-    # print(message)
+    messageBoard = mycursor.fetchall()
     if storeByCookieOrSession==1:
         userId=request.cookies.get('userId')
         fullName=request.cookies.get('fullName')
         username=request.cookies.get('username')
         if username and userId and fullName:
-            return render_template("loginSuccess.html",fullName=fullName)
+            return render_template("loginSuccess.html",fullName=fullName,messageBoard=messageBoard)
     elif storeByCookieOrSession==2:
         if "username" in session and "userId" in session:   
-            return render_template("loginSuccess.html",fullName=session["fullName"],message=message) 
+            return render_template("loginSuccess.html",fullName=session["fullName"],messageBoard=messageBoard) 
              
     return redirect("/")
 
@@ -127,9 +113,15 @@ def signout():
         session.pop("fullName", None)
         return redirect("/")
 
-@app.route("/message")
-def message():
-    pass
+@app.route("/messageIncrease",methods=["POST"])
+def messageIncrease():
+    messageContent=request.form["message"]
+    userId=session["userId"]
+    
+    sql ="INSERT INTO message(member_id,content)VALUES (%s, %s)"
+    val = (userId, messageContent)
+    mycursor.execute(sql, val)
+    mydb.commit()
+    return redirect("/member")
 
 app.run(port=3000)
-mydb.close()

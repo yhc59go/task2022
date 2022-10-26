@@ -5,9 +5,6 @@
         <meta charset="utf-8" />
         <title>Assignment - Week 1</title>
         <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='CSS/rwdLayout.css')}}" />
-        <script>
-            var myGeocode = '{{ message }}';
-        </script>
     </head>
     <body class="baseSettings">
         <div class="topFrame">
@@ -38,30 +35,14 @@
             <a href="/signout" class="loginTitle">登出系統</a> 
             <hr/>
             <div class="loginTitle">快來留言吧</div>
-            <form action="/message" class="formArea" method="POST">
+            <form action="/messageIncrease" class="formArea" method="POST">
                 內容 <input class="formArea" type="text" name="message" required="required"/><br>
                 <button >送出</button>
             </form>  
-            <!-- <hr/>
-            {{message}}<br/>
-            <hr/><br/>
-            {{ myresult }}<br/>
-            <hr/><br/>
-            <div id="test5">666</div>
-            <hr/> -->
-
-        </div>
-        <script>
-            var aa = document.getElementById("test5");
-            //let b=JSON.stringify(myGeocode);
-            var myGeocode ='{{ myresult }}';
-            console.log('{{ myresult }}');
-            console.log(myGeocode[0]);
-            //console.log(JSON.parse("{ 'Result': [{'fullName': 'fullNameTest', 'content': 'I like to lie in bed and watch Japanese TV dramas.'}, {'fullName': 'fullNameTest', 'content': 'This apple is delicious.'}, {'fullName': 'a1', 'content': 'I like to lie in bed and watch Japanese TV dramas.'}, {'fullName': 'a1', 'content': 'This apple is delicious.'}]}"));
-            //console.log(JSON.parse("'"+myGeocode+"'"));
-            //console.log(JSON.parse("{'Result': [{'fullName': 'fullNameTest', 'content': 'I like to lie in bed and watch Japanese TV dramas.'}, {'fullName': 'fullNameTest', 'content': 'This apple is delicious.'}, {'fullName': 'a1', 'content': 'I like to lie in bed and watch Japanese TV dramas.'}, {'fullName': 'a1', 'content': 'This apple is delicious.'}]}"));
-            //aa.innerHTML+=b;
-        </script>
-        
+            <hr/>
+                {% for i in messageBoard %}
+                    <span class="messageBoardUserName">{{ i[0] }}</span>: <span class="messageBoardContent">{{ i[1] }} </span><br/>
+                {% endfor %}
+        </div>      
     </body>
 </html>
