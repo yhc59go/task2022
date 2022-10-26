@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8" />
+        <title>Assignment - Week 1</title>
+        <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='CSS/rwdLayout.css')}}" />
+    </head>
+    <body class="baseSettings">
+        <div class="topFrame">
+            <div class="topLeft">My Website </div>
+            <div class="desktopMenu" >
+                <div class="menuItem">Item1</div>
+                <div class="menuItem">Item2</div>
+                <div class="menuItem">Item3</div>
+                <div class="menuItem">Item4</div>
+            </div>
+            <div class="mobileMenu">
+                <img src="{{url_for('static',filename='icons/reorder_48dp.svg')}}" />
+                <div class="dropdown-content">	
+                    <a href="#">Item1</a>							
+                    <a href="#">Item2</a>							
+                    <a href="#">Item3</a>							
+                    <a href="#">Item4</a>						
+                </div>            
+            </div>
+        </div>
+
+        <div class="greetingArea">
+            <div class="greetingText">歡迎光臨，請註冊登入系統</div>
+        </div>
+
+        <div class="centerArea">
+            <div class="loginTitle">註冊帳號</div>
+            <form action="/signup" class="formArea" method="POST">
+                姓名 <input class="formArea" type="text" name="fullName" required="required"/><br>
+                帳號 <input class="formArea" type="text" name="usernameSignUp" required="required"/><br>
+                密碼 <input class="formArea" type="password" name="passwordSignUp" required="required"/><br>
+                <button>註冊</button>
+            </form>  
+            <hr/> 
+
+            <div class="loginTitle">登入系統</div>
+            <form action="/signin" class="formArea" method="POST">
+                帳號 <input class="formArea" type="text" name="username" required="required"/><br>
+                密碼 <input class="formArea" type="password" name="password" required="required"/><br>
+                <button>登入</button>
+            </form>  
+
+        </div>  
+    </body>
+</html>

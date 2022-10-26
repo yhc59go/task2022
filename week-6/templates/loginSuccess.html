@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8" />
+        <title>Assignment - Week 1</title>
+        <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='CSS/rwdLayout.css')}}" />
+        <script>
+            var myGeocode = '{{ message }}';
+        </script>
+    </head>
+    <body class="baseSettings">
+        <div class="topFrame">
+            <div class="topLeft">My Website </div>
+            <div class="desktopMenu" >
+                <div class="menuItem">Item1</div>
+                <div class="menuItem">Item2</div>
+                <div class="menuItem">Item3</div>
+                <div class="menuItem">Item4</div>
+            </div>
+            <div class="mobileMenu">
+                <img src="{{url_for('static',filename='icons/reorder_48dp.svg')}}" />
+                <div class="dropdown-content">	
+                    <a href="#">Item1</a>							
+                    <a href="#">Item2</a>							
+                    <a href="#">Item3</a>							
+                    <a href="#">Item4</a>						
+                </div>            
+            </div>
+        </div>
+
+        <div class="greetingArea">
+            <div class="greetingText">歡迎光臨，這是會員頁</div>
+        </div>
+
+        <div class="centerArea">
+            <div class="loginTitle">{{ fullName }}，歡迎登入系統</div>
+            <a href="/signout" class="loginTitle">登出系統</a> 
+            <hr/>
+            <div class="loginTitle">快來留言吧</div>
+            <form action="/message" class="formArea" method="POST">
+                內容 <input class="formArea" type="text" name="message" required="required"/><br>
+                <button >送出</button>
+            </form>  
+            <!-- <hr/>
+            {{message}}<br/>
+            <hr/><br/>
+            {{ myresult }}<br/>
+            <hr/><br/>
+            <div id="test5">666</div>
+            <hr/> -->
+
+        </div>
+        <script>
+            var aa = document.getElementById("test5");
+            //let b=JSON.stringify(myGeocode);
+            var myGeocode ='{{ myresult }}';
+            console.log('{{ myresult }}');
+            console.log(myGeocode[0]);
+            //console.log(JSON.parse("{ 'Result': [{'fullName': 'fullNameTest', 'content': 'I like to lie in bed and watch Japanese TV dramas.'}, {'fullName': 'fullNameTest', 'content': 'This apple is delicious.'}, {'fullName': 'a1', 'content': 'I like to lie in bed and watch Japanese TV dramas.'}, {'fullName': 'a1', 'content': 'This apple is delicious.'}]}"));
+            //console.log(JSON.parse("'"+myGeocode+"'"));
+            //console.log(JSON.parse("{'Result': [{'fullName': 'fullNameTest', 'content': 'I like to lie in bed and watch Japanese TV dramas.'}, {'fullName': 'fullNameTest', 'content': 'This apple is delicious.'}, {'fullName': 'a1', 'content': 'I like to lie in bed and watch Japanese TV dramas.'}, {'fullName': 'a1', 'content': 'This apple is delicious.'}]}"));
+            //aa.innerHTML+=b;
+        </script>
+        
+    </body>
+</html>
