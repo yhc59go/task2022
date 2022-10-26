@@ -18,7 +18,7 @@ storeByCookieOrSession=2 #1: cookie, 2: session
 mydb = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="christine123",
+    password="",
     database="websystem_week6"
 )
 mycursor = mydb.cursor()
