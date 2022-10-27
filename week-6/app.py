@@ -16,13 +16,11 @@ app=Flask(
 app.secret_key="keySecret123456"
 storeByCookieOrSession=2 #1: cookie, 2: session
 
-mydb = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="",
-    database="websystem_week6"
-)
-mycursor = mydb.cursor()
+mysql_pool=mysql.connector.pooling.MySQLConnectionPool(
+            pool_name="mypool", pool_size=10, 
+            host="localhost", database="websystem_week6",
+            user="root", password="christine123",
+            pool_reset_session=True)
 
 @app.route("/")
 def index():
@@ -36,18 +34,27 @@ def signup():
     if (not fullName) or (not username) or (not password):
         message="請輸入姓名、帳號、密碼"
         return redirect("/error?message="+message)
-        
-    sql ="select * from member where username=%s"
-    mycursor.execute(sql,[username])
-    myresult = mycursor.fetchall()
+    try:
+        conn = mysql_pool.get_connection() #get connection from connect pool
+        cursor = conn.cursor()
+        sql="select * from member where username=%s"
+        cursor.execute(sql,[username])
+        myresult = cursor.fetchall()
+    except Exception as e:
+        print(e)
+        cursor.close()
+        conn.close()
+    
     if len(myresult)==0:
         sql = "INSERT INTO member(fullName,username,password)VALUES (%s, %s, MD5(%s))"
-        mycursor.execute(sql, (fullName, username, password))
-        mydb.commit()
+        cursor.execute(sql, (fullName, username, password))
+        conn.commit()
         return redirect("/")
     else:
         message="帳號已經被註冊"
         return redirect("/error?message="+message)
+    cursor.close()
+    conn.close()
 
 @app.route("/error")
 def errorHandler():
@@ -58,11 +65,18 @@ def errorHandler():
 def checkSignin():
     username=request.form["username"]
     password=request.form["password"]
-    sql ="select * from member where username=%s and password=MD5(%s)"
- 
-    mycursor.execute(sql,(username,password))
-    myresult = mycursor.fetchall()
 
+    try:
+        conn = mysql_pool.get_connection() #get connection from connect pool
+        cursor = conn.cursor()
+        sql ="select * from member where username=%s and password=MD5(%s)"
+        cursor.execute(sql,(username,password))
+        myresult = cursor.fetchall()
+    except Exception as e:
+        print(e)
+    finally: # must close cursor and conn!!
+        cursor.close()
+        conn.close()
     if (not username) or (not password):
         message="請輸入帳號、密碼"
         return redirect("/error?message="+message)
@@ -84,9 +98,17 @@ def checkSignin():
 
 @app.route("/member")
 def member():  
-    sql ="SELECT member.fullName,message.content FROM message INNER JOIN member ON message.member_id=member.id"
-    mycursor.execute(sql)
-    messageBoard = mycursor.fetchall()
+    try:
+        conn = mysql_pool.get_connection() #get connection from connect pool
+        cursor = conn.cursor()
+        sql ="SELECT member.fullName,message.content FROM message INNER JOIN member ON message.member_id=member.id"
+        cursor.execute(sql)
+        messageBoard = cursor.fetchall()
+    except Exception as e:
+        print(e)
+    finally: # must close cursor and conn!!
+        cursor.close()
+        conn.close()
     if storeByCookieOrSession==1:
         userId=request.cookies.get('userId')
         fullName=request.cookies.get('fullName')
@@ -117,10 +139,17 @@ def signout():
 def messageIncrease():
     messageContent=request.form["message"]
     userId=session["userId"]
-    
-    sql ="INSERT INTO message(member_id,content)VALUES (%s, %s)"
-    mycursor.execute(sql, (userId, messageContent))
-    mydb.commit()
+    try:
+        conn = mysql_pool.get_connection() #get connection from connect pool
+        cursor = conn.cursor()
+        sql ="INSERT INTO message(member_id,content)VALUES (%s, %s)"
+        cursor.execute(sql, (userId, messageContent))
+        conn.commit()
+    except Exception as e:
+        print(e)
+    finally: # must close cursor and conn!!
+        cursor.close()
+        conn.close()
     return redirect("/member")
 
 app.run(port=3000)
