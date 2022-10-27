@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 from flask import Flask
 from flask import request
 from flask import render_template
@@ -5,7 +6,7 @@ from flask import make_response
 from flask import redirect
 from flask import session
 import mysql.connector
-from flask import abort,jsonify,json
+
 
 app=Flask(
     __name__,
@@ -36,13 +37,12 @@ def signup():
         message="請輸入姓名、帳號、密碼"
         return redirect("/error?message="+message)
         
-    sql ="select * from member where username=\""+username+"\""
-    mycursor.execute(sql)
+    sql ="select * from member where username=%s"
+    mycursor.execute(sql,[username])
     myresult = mycursor.fetchall()
     if len(myresult)==0:
         sql = "INSERT INTO member(fullName,username,password)VALUES (%s, %s, MD5(%s))"
-        val = (fullName, username, password)
-        mycursor.execute(sql, val)
+        mycursor.execute(sql, (fullName, username, password))
         mydb.commit()
         return redirect("/")
     else:
@@ -58,9 +58,9 @@ def errorHandler():
 def checkSignin():
     username=request.form["username"]
     password=request.form["password"]
-    sql ="select * from member where username=\""+username+"\" and password=MD5(\""+password+"\")"
+    sql ="select * from member where username=%s and password=MD5(%s)"
  
-    mycursor.execute(sql)
+    mycursor.execute(sql,(username,password))
     myresult = mycursor.fetchall()
 
     if (not username) or (not password):
@@ -119,8 +119,7 @@ def messageIncrease():
     userId=session["userId"]
     
     sql ="INSERT INTO message(member_id,content)VALUES (%s, %s)"
-    val = (userId, messageContent)
-    mycursor.execute(sql, val)
+    mycursor.execute(sql, (userId, messageContent))
     mydb.commit()
     return redirect("/member")
 
