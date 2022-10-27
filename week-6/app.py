@@ -19,7 +19,7 @@ storeByCookieOrSession=2 #1: cookie, 2: session
 mysql_pool=mysql.connector.pooling.MySQLConnectionPool(
             pool_name="mypool", pool_size=10, 
             host="localhost", database="websystem_week6",
-            user="root", password="christine123",
+            user="root", password="",
             pool_reset_session=True)
 
 @app.route("/")
