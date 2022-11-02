@@ -33,16 +33,54 @@
         <div class="centerArea">
             <div class="loginTitle">{{ fullName }}，歡迎登入系統</div>
             <a href="/signout" class="loginTitle">登出系統</a> 
+            
             <hr/>
+            <form action="/messageIncrease" class="formArea" method="POST">
+                <div class="loginTitle">查詢會員姓名</div>
+                <input class="formArea" type="text" name="searchMember" required="required"/>
+                <input type='button' name='submit' value='查詢' onclick='getMemberName();' />
+            </form>
+            <div id="showMemberName"></div>
+            <hr/>
+
             <div class="loginTitle">快來留言吧</div>
             <form action="/messageIncrease" class="formArea" method="POST">
                 內容 <input class="formArea" type="text" name="message" required="required"/><br>
                 <button >送出</button>
             </form>  
+            
             <hr/>
                 {% for i in messageBoard %}
                     <span class="messageBoardUserName">{{ i[0] }}</span>: <span class="messageBoardContent">{{ i[1] }} </span><br/>
                 {% endfor %}
-        </div>      
+        </div>   
+        
+        <script>
+            function getMemberName() {
+                let nameElement = document.getElementsByName('searchMember');
+                let name = nameElement[0].value;
+                let src="http://127.0.0.1:3000/api/member?username="+name
+                
+                fetch(src).then(function(response){
+                    return response.json();
+                }).then(function(data){
+                    //get data
+                    if(data["data"]==null){
+                        memberData="No any data about this user."
+                    }else{
+                        memberData=JSON.stringify(data["data"]["name"])+" ("+JSON.stringify(data["data"]["username"])+") ";
+                        memberData=memberData.replace(/\"/g,"");    
+                    }
+                    //get title to webpage
+                    let targetTag=document.querySelector('#showMemberName');
+                    targetTag.textContent="";
+                    let title=document.createElement('div');
+                    title.textContent= memberData;
+                    targetTag.appendChild(title);
+                });
+
+            }
+            
+        </script>
     </body>
 </html>

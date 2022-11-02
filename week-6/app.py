@@ -6,6 +6,7 @@ from flask import make_response
 from flask import redirect
 from flask import session
 import mysql.connector
+import json
 
 
 app=Flask(
@@ -151,5 +152,30 @@ def messageIncrease():
         cursor.close()
         conn.close()
     return redirect("/member")
+
+@app.route("/api/member",methods=["GET"])
+def apiGetMemberName():
+    try:
+        memberThatYouSearch=request.args.get("username","")
+        conn = mysql_pool.get_connection() #get connection from connect pool
+        cursor = conn.cursor()
+        sql='select json_object("id",id,"name",fullName,"username",username) from member where username=%s'
+        print(sql)
+        cursor.execute(sql,[memberThatYouSearch])
+        myresult = cursor.fetchone()
+        
+    except Exception as e:
+        print(e)
+    finally: # must close cursor and conn!!
+        cursor.close()
+        conn.close()
+
+    #Return result with json format
+    if myresult:
+        GetMemberName={"data":json.loads(myresult[0])}
+    else:
+        GetMemberName={"data":None}
+    return json.dumps(GetMemberName)
+
 
 app.run(port=3000)
