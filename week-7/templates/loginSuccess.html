@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8" />
+        <title>Assignment - Week 1</title>
+        <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='CSS/rwdLayout.css')}}" />
+    </head>
+    <body class="baseSettings">
+        <div class="topFrame">
+            <div class="topLeft">My Website </div>
+            <div class="desktopMenu" >
+                <div class="menuItem">Item1</div>
+                <div class="menuItem">Item2</div>
+                <div class="menuItem">Item3</div>
+                <div class="menuItem">Item4</div>
+            </div>
+            <div class="mobileMenu">
+                <img src="{{url_for('static',filename='icons/reorder_48dp.svg')}}" />
+                <div class="dropdown-content">	
+                    <a href="#">Item1</a>							
+                    <a href="#">Item2</a>							
+                    <a href="#">Item3</a>							
+                    <a href="#">Item4</a>						
+                </div>            
+            </div>
+        </div>
+
+        <div class="greetingArea">
+            <div class="greetingText">歡迎光臨，這是會員頁</div>
+        </div>
+
+        <div class="centerArea">
+            <div class="loginTitle">{{ fullName }}，歡迎登入系統</div>
+            <a href="/signout" class="loginTitle">登出系統</a> 
+            
+            <hr/>
+            <form class="formArea" method="POST">
+                <div class="loginTitle">查詢會員姓名</div>
+                <input class="formArea" type="text" name="searchMember" required="required"/>
+                <input type='button' name='submit' value='查詢' onclick='getMemberName();' />
+            </form>
+            <div id="showMemberName"></div>
+            <hr/>
+
+            <form class="formArea" method="PATCH">
+                <div class="loginTitle">更新我的姓名</div>
+                <input class="formArea" type="text" name="modifyMember" required="required"/>
+                <input type='button' name='submit' value='更新' onclick='modifyMemberName();' />
+            </form>
+            <div id="showResultOfmodify"></div>
+            <hr/>
+
+            <div class="loginTitle">快來留言吧</div>
+            <form action="/messageIncrease" class="formArea" method="POST">
+                內容 <input class="formArea" type="text" name="message" required="required"/><br>
+                <button >送出</button>
+            </form>  
+            
+            <hr/>
+                {% for i in messageBoard %}
+                    <span class="messageBoardUserName">{{ i[0] }}</span>: <span class="messageBoardContent">{{ i[1] }} </span><br/>
+                {% endfor %}
+        </div>   
+        
+        <script>
+            function modifyMemberName() {
+                let nameElement = document.getElementsByName('modifyMember');
+                let newName = nameElement[0].value;
+                let src="http://127.0.0.1:3000/api/member"
+                
+                fetch(src,
+                    {
+                        method: "PATCH",
+                        headers: { "Content-Type": "application/json" },
+                        body: newName
+                    }
+                ).then(function(response){
+                    return response.json();
+                }).then(function(data){
+                    let targetTag=document.querySelector('#showResultOfmodify');
+                    targetTag.textContent="";
+                    let title=document.createElement('div');
+                    if(Object.keys(data)=="ok"){
+                        //show result
+                        title.textContent= "更新成功";
+                        title.className = "showResultSuccess"; 
+                    }else if(Object.keys(data)=="error") {
+                        //show result
+                        title.textContent= "更新失敗";
+                        title.className = "showResultFail"; 
+                    }
+                    targetTag.appendChild(title);  
+                });
+            }
+
+            function getMemberName() {
+                let nameElement = document.getElementsByName('searchMember');
+                let name = nameElement[0].value;
+                let src="http://127.0.0.1:3000/api/member?username="+name
+                
+                fetch(src).then(function(response){
+                    return response.json();
+                }).then(function(data){
+                    //get data
+                    if(data["data"]==null){
+                        memberData="No any data about this user."
+                    }else{
+                        memberData=JSON.stringify(data["data"]["name"])+" ("+JSON.stringify(data["data"]["username"])+") ";
+                        memberData=memberData.replace(/\"/g,"");    
+                    }
+                    //show result
+                    let targetTag=document.querySelector('#showMemberName');
+                    targetTag.textContent="";
+                    let title=document.createElement('div');
+                    title.textContent= memberData;
+                    targetTag.appendChild(title);
+                });
+
+            }
+            
+        </script>
+    </body>
+</html>
