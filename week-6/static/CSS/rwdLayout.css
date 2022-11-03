@@ -115,6 +115,13 @@
 .messageBoardContent{
     font-weight:lighter;
 }
+
+.showResultSuccess{
+    color:#008B8B;
+}
+.showResultFail{
+    color:#E6005C;
+}
 @media (max-width:1200px){
     .centerArea{
         flex-wrap: wrap;

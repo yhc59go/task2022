@@ -35,12 +35,20 @@
             <a href="/signout" class="loginTitle">登出系統</a> 
             
             <hr/>
-            <form action="/messageIncrease" class="formArea" method="POST">
+            <form class="formArea" method="POST">
                 <div class="loginTitle">查詢會員姓名</div>
                 <input class="formArea" type="text" name="searchMember" required="required"/>
                 <input type='button' name='submit' value='查詢' onclick='getMemberName();' />
             </form>
             <div id="showMemberName"></div>
+            <hr/>
+
+            <form class="formArea" method="PATCH">
+                <div class="loginTitle">更新我的姓名</div>
+                <input class="formArea" type="text" name="modifyMember" required="required"/>
+                <input type='button' name='submit' value='更新' onclick='modifyMemberName();' />
+            </form>
+            <div id="showResultOfmodify"></div>
             <hr/>
 
             <div class="loginTitle">快來留言吧</div>
@@ -56,6 +64,36 @@
         </div>   
         
         <script>
+            function modifyMemberName() {
+                let nameElement = document.getElementsByName('modifyMember');
+                let newName = nameElement[0].value;
+                let src="http://127.0.0.1:3000/api/member"
+                
+                fetch(src,
+                    {
+                        method: "PATCH",
+                        headers: { "Content-Type": "application/json" },
+                        body: newName
+                    }
+                ).then(function(response){
+                    return response.json();
+                }).then(function(data){
+                    let targetTag=document.querySelector('#showResultOfmodify');
+                    targetTag.textContent="";
+                    let title=document.createElement('div');
+                    if(Object.keys(data)=="ok"){
+                        //show result
+                        title.textContent= "更新成功";
+                        title.className = "showResultSuccess"; 
+                    }else if(Object.keys(data)=="error") {
+                        //show result
+                        title.textContent= "更新失敗";
+                        title.className = "showResultFail"; 
+                    }
+                    targetTag.appendChild(title);  
+                });
+            }
+
             function getMemberName() {
                 let nameElement = document.getElementsByName('searchMember');
                 let name = nameElement[0].value;
@@ -71,7 +109,7 @@
                         memberData=JSON.stringify(data["data"]["name"])+" ("+JSON.stringify(data["data"]["username"])+") ";
                         memberData=memberData.replace(/\"/g,"");    
                     }
-                    //get title to webpage
+                    //show result
                     let targetTag=document.querySelector('#showMemberName');
                     targetTag.textContent="";
                     let title=document.createElement('div');

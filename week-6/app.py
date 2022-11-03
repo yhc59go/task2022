@@ -8,7 +8,6 @@ from flask import session
 import mysql.connector
 import json
 
-
 app=Flask(
     __name__,
     static_folder="static",
@@ -43,8 +42,6 @@ def signup():
         myresult = cursor.fetchall()
     except Exception as e:
         print(e)
-        cursor.close()
-        conn.close()
     
     if len(myresult)==0:
         sql = "INSERT INTO member(fullName,username,password)VALUES (%s, %s, MD5(%s))"
@@ -153,29 +150,63 @@ def messageIncrease():
         conn.close()
     return redirect("/member")
 
-@app.route("/api/member",methods=["GET"])
-def apiGetMemberName():
-    try:
-        memberThatYouSearch=request.args.get("username","")
-        conn = mysql_pool.get_connection() #get connection from connect pool
-        cursor = conn.cursor()
-        sql='select json_object("id",id,"name",fullName,"username",username) from member where username=%s'
-        print(sql)
-        cursor.execute(sql,[memberThatYouSearch])
-        myresult = cursor.fetchone()
+@app.route("/api/member",methods=["GET","PATCH"])
+def apiMemberName():
+    if request.method=="PATCH":
+        #update to new full name
+        newName = request.get_data().decode("utf-8") 
+        if storeByCookieOrSession==1:
+            userId=request.cookies.get('userId')
+        elif storeByCookieOrSession==2:
+            userId=session["userId"]
+
+        try:
+            conn = mysql_pool.get_connection() #get connection from connect pool
+            cursor = conn.cursor()
+            sql = 'UPDATE member SET fullName=%s WHERE id=%s'
+            cursor.execute(sql, (newName,userId))
+            conn.commit()
+        except Exception as e:
+            print(e)
         
-    except Exception as e:
-        print(e)
-    finally: # must close cursor and conn!!
+        #check anrd return result
+        sql='select id from member where fullName=%s'
+        cursor.execute(sql,[newName])  
+        updateResult = cursor.fetchone()
         cursor.close()
         conn.close()
+        if updateResult:
+            if storeByCookieOrSession==1:
+                resp = make_response()
+                resp.set_cookie('fullName',newName, max_age=30*24*60*60) # 30天
+            elif storeByCookieOrSession==2:
+                session["fullName"]=newName
+            return json.dumps({"ok":True})
+        else:
+            return json.dumps({"error":True})
 
-    #Return result with json format
-    if myresult:
-        GetMemberName={"data":json.loads(myresult[0])}
-    else:
-        GetMemberName={"data":None}
-    return json.dumps(GetMemberName)
+    elif request.method=="GET":
+        try:
+            memberThatYouSearch=request.args.get("username","")
+            conn = mysql_pool.get_connection() #get connection from connect pool
+            cursor = conn.cursor()
+            sql='select json_object("id",id,"name",fullName,"username",username) from member where username=%s'
+            print(sql)
+            cursor.execute(sql,[memberThatYouSearch])
+            myresult = cursor.fetchone()
+            
+        except Exception as e:
+            print(e)
+        finally: # must close cursor and conn!!
+            cursor.close()
+            conn.close()
+
+        #Return result with json format
+        if myresult:
+            GetMemberName={"data":json.loads(myresult[0])}
+        else:
+            GetMemberName={"data":None}
+        return json.dumps(GetMemberName)
 
 
 app.run(port=3000)
