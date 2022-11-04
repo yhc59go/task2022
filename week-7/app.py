@@ -6,20 +6,21 @@ from flask import make_response
 from flask import redirect
 from flask import session
 import mysql.connector
-import json
+from flask import json, jsonify
 
 app=Flask(
     __name__,
     static_folder="static",
     static_url_path="/"
 )
+app.config['JSON_AS_ASCII'] = False #For chinese in jsonify
 app.secret_key="keySecret123456"
 storeByCookieOrSession=2 #1: cookie, 2: session
 
 mysql_pool=mysql.connector.pooling.MySQLConnectionPool(
             pool_name="mypool", pool_size=10, 
             host="localhost", database="websystem_week6",
-            user="root", password="",
+            user="root", password="christine123",
             pool_reset_session=True)
 
 @app.route("/")
@@ -165,25 +166,22 @@ def apiMemberName():
             cursor = conn.cursor()
             sql = 'UPDATE member SET fullName=%s WHERE id=%s'
             cursor.execute(sql, (newName,userId))
-            conn.commit()
+            count = cursor.rowcount #判斷影響的數目
+            conn.commit()    
         except Exception as e:
             print(e)
-        
-        #check anrd return result
-        sql='select id from member where fullName=%s'
-        cursor.execute(sql,[newName])  
-        updateResult = cursor.fetchone()
-        cursor.close()
-        conn.close()
-        if updateResult:
+        finally:
+            cursor.close()
+            conn.close()
+        if count==1:
             if storeByCookieOrSession==1:
                 resp = make_response()
                 resp.set_cookie('fullName',newName, max_age=30*24*60*60) # 30天
             elif storeByCookieOrSession==2:
                 session["fullName"]=newName
-            return json.dumps({"ok":True})
+            return jsonify({"ok":True})
         else:
-            return json.dumps({"error":True})
+            return jsonify({"error":True})
 
     elif request.method=="GET":
         try:
@@ -191,7 +189,6 @@ def apiMemberName():
             conn = mysql_pool.get_connection() #get connection from connect pool
             cursor = conn.cursor()
             sql='select json_object("id",id,"name",fullName,"username",username) from member where username=%s'
-            print(sql)
             cursor.execute(sql,[memberThatYouSearch])
             myresult = cursor.fetchone()
             
@@ -200,13 +197,11 @@ def apiMemberName():
         finally: # must close cursor and conn!!
             cursor.close()
             conn.close()
-
         #Return result with json format
         if myresult:
             GetMemberName={"data":json.loads(myresult[0])}
         else:
             GetMemberName={"data":None}
-        return json.dumps(GetMemberName)
-
-
+        return jsonify(GetMemberName)
+    
 app.run(port=3000)

@@ -81,13 +81,18 @@
                     let targetTag=document.querySelector('#showResultOfmodify');
                     targetTag.textContent="";
                     let title=document.createElement('div');
-                    if(Object.keys(data)=="ok"){
+                    
+                    if(data["ok"]==true){
                         //show result
                         title.textContent= "更新成功";
                         title.className = "showResultSuccess"; 
-                    }else if(Object.keys(data)=="error") {
+                    }else if(data["error"]==true) {
                         //show result
                         title.textContent= "更新失敗";
+                        title.className = "showResultFail"; 
+                    }else{
+                        //show result
+                        title.textContent= "Something wrong. Please check.";
                         title.className = "showResultFail"; 
                     }
                     targetTag.appendChild(title);  
@@ -106,8 +111,7 @@
                     if(data["data"]==null){
                         memberData="No any data about this user."
                     }else{
-                        memberData=JSON.stringify(data["data"]["name"])+" ("+JSON.stringify(data["data"]["username"])+") ";
-                        memberData=memberData.replace(/\"/g,"");    
+                        memberData=data["data"]["name"]+" ("+data["data"]["username"]+")";
                     }
                     //show result
                     let targetTag=document.querySelector('#showMemberName');
